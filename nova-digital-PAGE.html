@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nova Digital — Lance ton Business Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --gold:#f59e0b; --gold-h:#fbbf24; --green:#10b981;
+      --bg:#09090b; --s1:#111113; --s2:#17171a; --s3:#1e1e22;
+      --border:rgba(255,255,255,0.07); --border-gold:rgba(245,158,11,0.28);
+      --t1:#f4f0eb; --t2:#8a8780; --t3:#3f3e3c;
+      --font-d:'Instrument Serif',Georgia,serif;
+      --font-b:'Manrope',system-ui,sans-serif;
+      --r-sm:.375rem;--r-md:.5rem;--r-lg:.75rem;--r-xl:1rem;--r-full:9999px;
+      --ease:cubic-bezier(0.16,1,0.3,1);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;font-size:16px}
+    body{font-family:var(--font-b);color:var(--t1);background:var(--bg);line-height:1.65;overflow-x:hidden}
+    h1,h2,h3{font-family:var(--font-d);line-height:1.1;text-wrap:balance}
+    p{text-wrap:pretty;max-width:65ch}
+    a{color:inherit;text-decoration:none}
+    button{cursor:pointer;font:inherit;color:inherit;background:none;border:none}
+    img{display:block;max-width:100%;height:auto}
+
+    .wrap{max-width:960px;margin-inline:auto;padding-inline:clamp(1rem,5vw,2.5rem)}
+    .wrap--wide{max-width:1160px}
+
+    /* ─── SCROLL REVEAL ─── */
+    @supports(animation-timeline:scroll()){
+      .reveal{opacity:0;animation:rfade linear both;animation-timeline:view();animation-range:entry 0% entry 85%}
+      @keyframes rfade{to{opacity:1}}
+    }
+
+    /* ─── NAV ─── */
+    nav{position:sticky;top:0;z-index:100;background:rgba(9,9,11,.82);backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--border)}
+    .nav-in{display:flex;align-items:center;justify-content:space-between;padding-block:.9rem}
+    .logo{display:flex;align-items:center;gap:.5rem;font-family:var(--font-d);font-size:1.2rem;font-weight:400}
+    .logo svg{width:30px;height:30px;flex-shrink:0}
+    .nav-btn{background:var(--gold);color:#09090b;padding:.45rem 1.2rem;border-radius:var(--r-full);
+      font-weight:700;font-size:.85rem;transition:background 150ms var(--ease),transform 150ms var(--ease)}
+    .nav-btn:hover{background:var(--gold-h);transform:translateY(-1px)}
+
+    /* ─── HERO ─── */
+    .hero{position:relative;text-align:center;padding-block:clamp(4rem,12vw,7rem);overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 90% 55% at 50% -5%,rgba(245,158,11,.14) 0%,transparent 70%);
+      pointer-events:none;z-index:0}
+    .hero>*{position:relative;z-index:1}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;
+      background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.22);
+      color:var(--gold);padding:.35rem 1rem;border-radius:var(--r-full);
+      font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;margin-bottom:1.5rem}
+    .hero-title{font-size:clamp(2.6rem,6vw+1rem,5.2rem);font-weight:400;letter-spacing:-.025em;
+      margin-bottom:1.4rem;max-width:13ch;margin-inline:auto}
+    .hero-title em{font-style:italic;color:var(--gold)}
+    .hero-sub{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--t2);max-width:50ch;margin-inline:auto;
+      margin-bottom:2.5rem;font-weight:400;line-height:1.7}
+    .cta-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem;margin-bottom:2rem}
+    .btn-gold{display:inline-flex;align-items:center;gap:.5rem;background:var(--gold);color:#09090b;
+      padding:1rem 2rem;border-radius:var(--r-full);font-weight:800;font-size:1rem;
+      box-shadow:0 0 36px rgba(245,158,11,.38);
+      transition:background 160ms var(--ease),transform 160ms var(--ease),box-shadow 160ms var(--ease)}
+    .btn-gold:hover{background:var(--gold-h);transform:translateY(-2px);box-shadow:0 0 52px rgba(245,158,11,.55)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:.4rem;color:var(--t2);font-size:.9rem;
+      transition:color 150ms var(--ease)}
+    .btn-ghost:hover{color:var(--t1)}
+    .trust-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:1.5rem;
+      font-size:.75rem;color:var(--t3)}
+    .trust-item{display:flex;align-items:center;gap:.35rem}
+    .trust-item svg{color:var(--green);width:14px;height:14px}
+
+    /* ─── TICKER ─── */
+    .ticker{background:var(--s1);border-block:1px solid var(--border);overflow:hidden;padding-block:.6rem}
+    .ticker-inner{display:flex;width:max-content;animation:tick 28s linear infinite}
+    @keyframes tick{to{transform:translateX(-50%)}}
+    .ticker-item{display:flex;align-items:center;gap:.5rem;padding-inline:2rem;
+      font-size:.8rem;font-weight:600;color:var(--t2);white-space:nowrap}
+    .ticker-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+
+    /* ─── STATS ─── */
+    .stats{padding-block:3.5rem;border-bottom:1px solid var(--border)}
+    .stats-grid{display:flex;flex-wrap:wrap;justify-content:center;
+      gap:2rem clamp(2rem,6vw,5rem);text-align:center}
+    .stat-val{font-family:var(--font-d);font-size:clamp(2rem,4vw,3rem);color:var(--gold);display:block;line-height:1}
+    .stat-lbl{font-size:.73rem;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-top:.35rem}
+
+    /* ─── SECTION BASE ─── */
+    .section{padding-block:clamp(4rem,9vw,6rem)}
+    .lbl{font-size:.72rem;font-family:var(--font-b);font-weight:700;text-transform:uppercase;
+      letter-spacing:.1em;color:var(--gold);margin-bottom:.9rem}
+    .sec-title{font-size:clamp(1.8rem,3.5vw,3rem);letter-spacing:-.02em;margin-bottom:.9rem}
+    .sec-sub{font-size:1rem;color:var(--t2);max-width:50ch}
+    .sec-hd{margin-bottom:clamp(2.5rem,5vw,4rem)}
+
+    /* ─── FEATURES ─── */
+    .feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(270px,100%),1fr));gap:1rem}
+    .feat-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r-xl);
+      padding:1.5rem;transition:border-color 200ms var(--ease),box-shadow 200ms var(--ease),transform 200ms var(--ease)}
+    .feat-card:hover{border-color:rgba(245,158,11,.28);box-shadow:0 0 22px rgba(245,158,11,.08);transform:translateY(-3px)}
+    .feat-ico{width:38px;height:38px;background:rgba(245,158,11,.1);border-radius:var(--r-md);
+      display:flex;align-items:center;justify-content:center;color:var(--gold);margin-bottom:1rem}
+    .feat-ico svg{width:18px;height:18px}
+    .feat-t{font-family:var(--font-b);font-weight:700;font-size:1rem;margin-bottom:.4rem}
+    .feat-d{font-size:.88rem;color:var(--t2);line-height:1.6}
+
+    /* ─── INCLUDED ─── */
+    .inc-wrap{background:var(--s1);border-radius:1.5rem;border:1px solid var(--border);
+      overflow:hidden;display:grid;grid-template-columns:1fr 1fr}
+    .inc-left{padding:clamp(2rem,5vw,3.5rem)}
+    .inc-list{list-style:none;display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
+    .inc-item{display:flex;align-items:flex-start;gap:.75rem;font-size:.95rem}
+    .inc-item svg{color:var(--green);width:18px;height:18px;flex-shrink:0;margin-top:2px}
+    .inc-right{background:var(--s2);border-left:1px solid var(--border);padding:clamp(2rem,5vw,3rem);
+      display:flex;flex-direction:column;justify-content:center;gap:1.2rem}
+    .mock-title{font-family:var(--font-d);font-size:1.4rem;margin-bottom:.5rem}
+    .mbar{height:7px;border-radius:var(--r-full);background:var(--s3);margin-bottom:.6rem}
+    .mbar.a{background:var(--gold);width:65%}
+    .mbar.b{width:82%}
+    .mbar.c{width:48%}
+    .mtags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+    .mtag{background:rgba(245,158,11,.1);color:var(--gold);border:1px solid rgba(245,158,11,.18);
+      border-radius:var(--r-full);padding:.2rem .7rem;font-size:.72rem;font-weight:600}
+    .mstamp{display:flex;align-items:center;gap:.5rem;margin-top:1.5rem;
+      background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);
+      border-radius:var(--r-lg);padding:.75rem 1rem;font-size:.78rem;color:var(--green)}
+    .mstamp svg{width:14px;height:14px;flex-shrink:0}
+
+    /* ─── TESTIMONIALS ─── */
+    .testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(290px,100%),1fr));gap:1rem}
+    .testi-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r-xl);padding:1.5rem}
+    .stars{display:flex;gap:.2rem;margin-bottom:1rem;color:var(--gold)}
+    .stars svg{width:14px;height:14px}
+    .testi-txt{font-size:.88rem;color:var(--t2);line-height:1.75;margin-bottom:1.2rem}
+    .testi-auth{display:flex;align-items:center;gap:.75rem}
+    .av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-weight:800;font-size:.85rem;color:#09090b;flex-shrink:0}
+    .av-g{background:linear-gradient(135deg,#f59e0b,#d97706)}
+    .av-gr{background:linear-gradient(135deg,#10b981,#059669)}
+    .av-b{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
+    .auth-name{font-weight:700;font-size:.88rem}
+    .auth-role{font-size:.75rem;color:var(--t3)}
+
+    /* ─── PRICING ─── */
+    .price-bg{background:var(--s1)}
+    .price-card{max-width:460px;margin-inline:auto;background:var(--bg);
+      border:1px solid var(--border-gold);border-radius:1.5rem;padding:clamp(2rem,5vw,3rem);
+      box-shadow:0 0 70px rgba(245,158,11,.13);text-align:center}
+    .p-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--gold);color:#09090b;
+      padding:.25rem .9rem;border-radius:var(--r-full);font-size:.72rem;font-weight:800;
+      text-transform:uppercase;letter-spacing:.07em;margin-bottom:1.4rem}
+    .p-name{font-size:1.5rem;margin-bottom:.4rem}
+    .p-price{font-size:clamp(3rem,6vw,4.5rem);color:var(--gold);line-height:1}
+    .p-price sup{font-size:1.4rem;vertical-align:super}
+    .p-old{font-size:.95rem;color:var(--t3);text-decoration:line-through;margin-top:.3rem;margin-bottom:2rem}
+    .p-list{list-style:none;display:flex;flex-direction:column;gap:.75rem;margin-bottom:2rem;text-align:left}
+    .p-list li{display:flex;align-items:center;gap:.75rem;font-size:.9rem}
+    .p-list li svg{color:var(--green);width:16px;height:16px;flex-shrink:0}
+    .p-cta{width:100%;background:var(--gold);color:#09090b;padding:1rem 2rem;
+      border-radius:var(--r-full);font-weight:800;font-size:1rem;
+      box-shadow:0 0 36px rgba(245,158,11,.42);margin-bottom:1rem;
+      transition:background 160ms var(--ease),transform 160ms var(--ease),box-shadow 160ms var(--ease)}
+    .p-cta:hover{background:var(--gold-h);transform:translateY(-2px);box-shadow:0 0 52px rgba(245,158,11,.58)}
+    .p-secure{display:flex;align-items:center;justify-content:center;gap:.4rem;
+      font-size:.75rem;color:var(--t3)}
+    .p-secure svg{width:13px;height:13px}
+
+    /* ─── URGENCY BANNER ─── */
+    .urgency{background:linear-gradient(90deg,rgba(245,158,11,.12),rgba(245,158,11,.06),rgba(245,158,11,.12));
+      border-block:1px solid rgba(245,158,11,.2);padding:1rem;text-align:center;
+      font-size:.85rem;color:var(--gold);font-weight:600;display:flex;align-items:center;
+      justify-content:center;gap:.6rem}
+    .urgency svg{width:16px;height:16px}
+
+    /* ─── FAQ ─── */
+    .faq-wrap{max-width:620px;margin-inline:auto}
+    details{border-bottom:1px solid var(--border);padding-block:1.2rem}
+    summary{cursor:pointer;list-style:none;display:flex;align-items:center;
+      justify-content:space-between;gap:1rem;font-weight:600;font-size:.95rem}
+    summary::-webkit-details-marker{display:none}
+    .si{width:18px;height:18px;flex-shrink:0;color:var(--gold);transition:transform 200ms var(--ease)}
+    details[open] .si{transform:rotate(45deg)}
+    .fa{padding-top:1rem;font-size:.88rem;color:var(--t2);line-height:1.75}
+
+    /* ─── FINAL CTA ─── */
+    .final-cta{text-align:center;border-top:1px solid var(--border);
+      background:radial-gradient(ellipse 70% 55% at 50% 110%,rgba(245,158,11,.1) 0%,transparent 65%)}
+
+    /* ─── FOOTER ─── */
+    footer{border-top:1px solid var(--border);padding-block:2rem;text-align:center;
+      font-size:.75rem;color:var(--t3)}
+    footer a{color:var(--t2);transition:color 150ms}
+    footer a:hover{color:var(--t1)}
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:768px){
+      .inc-wrap{grid-template-columns:1fr}
+      .inc-right{display:none}
+    }
+    @media(max-width:480px){
+      .cta-row{flex-direction:column;align-items:stretch}
+      .btn-gold{justify-content:center}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wrap nav-in">
+    <div class="logo">
+      <svg viewBox="0 0 30 30" fill="none" aria-label="Nova Digital">
+        <rect width="30" height="30" rx="7" fill="#f59e0b" fill-opacity=".13"/>
+        <path d="M6 21 L11 10 L17 18 L21 13" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="21" cy="13" r="2.2" fill="#f59e0b"/>
+      </svg>
+      Nova Digital
+    </div>
+    <a href="#pricing" class="nav-btn">Commencer — 47&nbsp;€</a>
+  </div>
+</nav>
+
+<!-- URGENCY -->
+<div class="urgency">
+  <i data-lucide="clock" ></i>
+  Offre de lancement : -52% encore disponible aujourd'hui
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="badge">
+      <i data-lucide="zap" style="width:11px;height:11px"></i>
+      Master Resell Rights · Business clé en main
+    </div>
+    <h1 class="hero-title">Lance ton business <em>digital</em> dès aujourd'hui.</h1>
+    <p class="hero-sub">Un produit complet avec droits de revente inclus. Revends-le à ton prix, garde 100&nbsp;% de chaque vente.</p>
+    <div class="cta-row">
+      <a href="#pricing" class="btn-gold">
+        <i data-lucide="rocket" style="width:18px;height:18px"></i>
+        Je veux accéder maintenant
+      </a>
+      <a href="#inclus" class="btn-ghost">
+        Voir ce qui est inclus
+        <i data-lucide="arrow-down" style="width:14px;height:14px"></i>
+      </a>
+    </div>
+    <div class="trust-row">
+      <span class="trust-item"><i data-lucide="shield-check"></i> Paiement sécurisé</span>
+      <span class="trust-item"><i data-lucide="download"></i> Accès immédiat</span>
+      <span class="trust-item"><i data-lucide="refresh-cw"></i> Droits de revente à vie</span>
+      <span class="trust-item"><i data-lucide="ban"></i> Pas de MLM</span>
+    </div>
+  </div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item"><span class="ticker-dot"></span>Formation marketing digital complète</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Droits de revente MRR inclus</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Tunnel de vente prêt</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Séquence email automatique</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Accès à vie</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Communauté privée</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Revente 100% des bénéfices</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Guide pas à pas inclus</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Formation marketing digital complète</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Droits de revente MRR inclus</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Tunnel de vente prêt</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Séquence email automatique</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Accès à vie</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Communauté privée</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Revente 100% des bénéfices</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Guide pas à pas inclus</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="reveal"><span class="stat-val">+340</span><span class="stat-lbl">clients satisfaits</span></div>
+      <div class="reveal"><span class="stat-val">100%</span><span class="stat-lbl">du revenu gardé</span></div>
+      <div class="reveal"><span class="stat-val">&lt; 24h</span><span class="stat-lbl">pour être opérationnel</span></div>
+      <div class="reveal"><span class="stat-val">∞</span><span class="stat-lbl">reventes possibles</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="wrap">
+    <div class="sec-hd">
+      <p class="lbl">Pourquoi Nova Digital</p>
+      <h2 class="sec-title">Tout pour te lancer<br>sans partir de zéro</h2>
+      <p class="sec-sub">Pas besoin de créer un produit ni d'avoir de l'expérience. Tu achètes une fois, tu revends sans limite.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card reveal">
+        <div class="feat-ico"><i data-lucide="package"></i></div>
+        <div class="feat-t">Produit Prêt à l'Emploi</div>
+        <p class="feat-d">Formation complète déjà créée. Tu la reçois, tu la revends. Zéro création de contenu.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-ico"><i data-lucide="refresh-cw"></i></div>
+        <div class="feat-t">Droits de Revente Totaux</div>
+        <p class="feat-d">Revends autant de fois que tu veux. Chaque vente = 100&nbsp;% pour toi, sans intermédiaire.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-ico"><i data-lucide="trending-up"></i></div>
+        <div class="feat-t">Revenus en Automatique</div>
+        <p class="feat-d">Configure ton tunnel une fois. Le business tourne même quand tu dors ou que tu es en cours.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-ico"><i data-lucide="book-open"></i></div>
+        <div class="feat-t">Formation Marketing Incluse</div>
+        <p class="feat-d">Modules vidéo HD : réseaux sociaux, copywriting, publicité, email marketing et bien plus.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-ico"><i data-lucide="layout-template"></i></div>
+        <div class="feat-t">Tunnel de Vente Fourni</div>
+        <p class="feat-d">Template page de vente prêt à personnaliser et publier sur Systeme.io en quelques minutes.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-ico"><i data-lucide="users"></i></div>
+        <div class="feat-t">Communauté & Support</div>
+        <p class="feat-d">Groupe privé actif pour poser tes questions, progresser et rester motivé au quotidien.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INCLUDED -->
+<section class="section" style="background:var(--s1);padding-block:0" id="inclus">
+  <div class="wrap" style="padding-block:clamp(4rem,9vw,6rem)">
+    <div class="inc-wrap reveal">
+      <div class="inc-left">
+        <p class="lbl">Ce que tu reçois</p>
+        <h2 class="sec-title">Un pack complet.<br>Rien à ajouter.</h2>
+        <ul class="inc-list">
+          <li><i data-lucide="check-circle"></i><div><strong>Formation marketing digital</strong> — modules vidéo HD sur les réseaux, le copywriting et la pub</div></li>
+          <li><i data-lucide="check-circle"></i><div><strong>Guide de revente MRR</strong> — comment vendre, à qui, à quel prix et où</div></li>
+          <li><i data-lucide="check-circle"></i><div><strong>Template page de vente</strong> — prêt à personnaliser sur Systeme.io</div></li>
+          <li><i data-lucide="check-circle"></i><div><strong>Séquence email automatique</strong> — 5 emails pour convertir tes prospects</div></li>
+          <li><i data-lucide="check-circle"></i><div><strong>Droits de revente MRR à vie</strong> — légalement autorisé à revendre sans limite</div></li>
+          <li><i data-lucide="check-circle"></i><div><strong>Support & communauté privée</strong> — groupe actif Discord/Telegram</div></li>
+        </ul>
+      </div>
+      <div class="inc-right">
+        <div>
+          <div class="mock-title">Formation Marketing Digital</div>
+          <div class="mbar a"></div>
+          <div class="mbar b"></div>
+          <div class="mbar c"></div>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:1.2rem">
+          <div style="font-size:.75rem;color:var(--t2);margin-bottom:.7rem;font-weight:600">DROITS INCLUS</div>
+          <div class="mtags">
+            <span class="mtag">✓ Master Resell Rights</span>
+            <span class="mtag">✓ Revente 100%</span>
+            <span class="mtag">✓ Accès à vie</span>
+            <span class="mtag">✓ Tunnel inclus</span>
+            <span class="mtag">✓ Email séquence</span>
+          </div>
+          <div class="mstamp">
+            <i data-lucide="shield-check"></i>
+            Droits légaux de revente vérifiés
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="avis">
+  <div class="wrap">
+    <div class="sec-hd" style="text-align:center">
+      <p class="lbl">Ils ont sauté le pas</p>
+      <h2 class="sec-title">Ce qu'ils en disent</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="stars">
+          <i data-lucide="star" style="fill:currentColor"></i><i data-lucide="star" style="fill:currentColor"></i>
+          <i data-lucide="star" style="fill:currentColor"></i><i data-lucide="star" style="fill:currentColor"></i>
+          <i data-lucide="star" style="fill:currentColor"></i>
+        </div>
+        <p class="testi-txt">"J'ai fait ma première vente en moins de 48h après avoir configuré mon tunnel. Le produit est complet et le guide de revente est vraiment clair."</p>
+        <div class="testi-auth">
+          <div class="av av-g">K</div>
+          <div><div class="auth-name">Karim B.</div><div class="auth-role">Étudiant, Lyon</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">
+          <i data-lucide="star" style="fill:currentColor"></i><i data-lucide="star" style="fill:currentColor"></i>
+          <i data-lucide="star" style="fill:currentColor"></i><i data-lucide="star" style="fill:currentColor"></i>
+          <i data-lucide="star" style="fill:currentColor"></i>
+        </div>
+        <p class="testi-txt">"Franchement top. Zéro expérience en marketing et maintenant j'ai un vrai business. Le tunnel est prêt, le produit est prêt, t'as juste à vendre."</p>
+        <div class="testi-auth">
+          <div class="av av-gr">S</div>
+          <div><div class="auth-name">Sofia M.</div><div class="auth-role">Auto-entrepreneuse, Paris</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">
+          <i data-lucide="star" style="fill:currentColor"></i><i data-lucide="star" style="fill:currentColor"></i>
+          <i data-lucide="star" style="fill:currentColor"></i><i data-lucide="star" style="fill:currentColor"></i>
+          <i data-lucide="star" style="fill:currentColor"></i>
+        </div>
+        <p class="testi-txt">"Ce qui m'a convaincu c'est les droits légaux. Pas d'arnaque, pas de MLM. T'achètes un produit, t'as le droit de le revendre. Simple et efficace."</p>
+        <div class="testi-auth">
+          <div class="av av-b">T</div>
+          <div><div class="auth-name">Théo R.</div><div class="auth-role">Freelance, Bordeaux</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section price-bg" id="pricing">
+  <div class="wrap">
+    <div class="sec-hd" style="text-align:center">
+      <p class="lbl">Offre de lancement</p>
+      <h2 class="sec-title">Une seule offre.<br>Tout inclus.</h2>
+    </div>
+    <div class="price-card reveal">
+      <span class="p-badge"><i data-lucide="flame" style="width:11px;height:11px"></i>&nbsp;Offre limitée</span>
+      <h3 class="p-name">Pack Nova Digital Complet</h3>
+      <div class="p-price"><sup>€</sup>47</div>
+      <div class="p-old">Prix habituel : 97&nbsp;€</div>
+      <ul class="p-list">
+        <li><i data-lucide="check"></i> Formation marketing digital complète</li>
+        <li><i data-lucide="check"></i> Droits de revente Master (MRR) à vie</li>
+        <li><i data-lucide="check"></i> Template tunnel de vente prêt</li>
+        <li><i data-lucide="check"></i> Séquence email automatique (5 emails)</li>
+        <li><i data-lucide="check"></i> Guide de revente pas à pas</li>
+        <li><i data-lucide="check"></i> Accès à la communauté privée</li>
+        <li><i data-lucide="check"></i> Mises à jour gratuites à vie</li>
+      </ul>
+      <button class="p-cta">🚀 Je prends l'offre — 47&nbsp;€</button>
+      <div class="p-secure"><i data-lucide="lock"></i> Paiement 100&nbsp;% sécurisé · Accès immédiat après achat</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="sec-hd" style="text-align:center">
+      <p class="lbl">Questions fréquentes</p>
+      <h2 class="sec-title">Tu as des doutes&nbsp;?</h2>
+    </div>
+    <div class="faq-wrap">
+      <details>
+        <summary>C'est quoi exactement le MRR&nbsp;? <i data-lucide="plus" class="si"></i></summary>
+        <div class="fa">Le Master Resell Rights (MRR) te donne le droit d'acheter un produit digital et de le revendre à ton propre prix, en gardant 100&nbsp;% des revenus. Tu n'as pas à créer le produit — tu l'achètes une fois et tu peux le vendre autant de fois que tu veux.</div>
+      </details>
+      <details>
+        <summary>Est-ce que c'est légal&nbsp;? <i data-lucide="plus" class="si"></i></summary>
+        <div class="fa">Oui. Les droits de revente sont une pratique légale dans le marketing digital. Tu reçois une licence qui t'autorise explicitement à revendre le produit. Ce n'est pas du MLM — il n'y a pas de parrainage obligatoire ni de recrutement.</div>
+      </details>
+      <details>
+        <summary>Je n'ai aucune expérience, ça me convient&nbsp;? <i data-lucide="plus" class="si"></i></summary>
+        <div class="fa">Absolument. Le pack est conçu pour les débutants. Tu reçois un guide pas à pas, un tunnel de vente prêt à personnaliser et une séquence email automatique. Aucune compétence technique requise.</div>
+      </details>
+      <details>
+        <summary>Combien de temps avant ma première vente&nbsp;? <i data-lucide="plus" class="si"></i></summary>
+        <div class="fa">Certains clients font leur première vente dans les 48h. D'autres prennent quelques semaines selon leur activité sur les réseaux. Le guide inclus t'explique exactement comment accélérer.</div>
+      </details>
+      <details>
+        <summary>J'ai accès au produit pendant combien de temps&nbsp;? <i data-lucide="plus" class="si"></i></summary>
+        <div class="fa">À vie. Tu paies une seule fois et tu accèdes à tout le contenu sans limite de temps, ainsi qu'à toutes les futures mises à jour gratuitement.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section final-cta">
+  <div class="wrap" style="text-align:center">
+    <h2 class="sec-title" style="font-size:clamp(1.8rem,4vw,3rem);margin-bottom:1rem">Prêt à te lancer&nbsp;?</h2>
+    <p class="sec-sub" style="margin-inline:auto;margin-bottom:2rem">Des centaines de personnes ont déjà démarré avec ce pack. Le produit est prêt, le tunnel est prêt. Il manque juste toi.</p>
+    <a href="#pricing" class="btn-gold" style="display:inline-flex">
+      <i data-lucide="rocket" style="width:18px;height:18px"></i>
+      Je commence maintenant — 47&nbsp;€
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <p>© 2026 Nova Digital · Tous droits réservés · <a href="#faq">FAQ</a></p>
+    <p style="margin-top:.5rem">Les résultats varient selon les individus. Ce produit ne garantit aucun revenu.</p>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+  document.querySelector('.p-cta').addEventListener('click',()=>{
+    alert('Remplace cet alert par ton lien de paiement Systeme.io !');
+  });
+</script>
+</body>
+</html>
